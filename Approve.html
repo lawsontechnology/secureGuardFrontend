@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approval Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow-y: hidden;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #3627b8, #302b63, #4f4fa8);
+        }
+
+        .container {
+            max-width: 310px;
+            margin: 10% auto; 
+            background-color: #fff;
+            padding: 20px;
+            height: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+             width: 120px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="/img/gui_approve_icon_157246.png" alt="Logo">
+
+        <h1>Approval Successful</h1>
+        <p> request has been approved.</p>
+
+        <div class="button-container">
+            <a href="http://127.0.0.1:5505/index.html" class="button">Return to Home</a>
+        </div>
+    </div>
+
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+         sendValuesToBackend();
+     });
+
+     function sendValuesToBackend() {
+
+         const urlParams = new URLSearchParams(window.location.search);
+         const token = urlParams.get('token');
+         const visitId = urlParams.get('visitId');
+
+         if (!token || !visitId) {
+             console.error("Token or visitId not found in the URL.");
+             window.location.href = "http://127.0.0.1:5505/404.html";
+             return;
+         }
+
+         var requestData = {
+             token: token,
+             visitId: visitId
+         };
+
+         fetch("http://localhost:7075/api/Visitor/Request/Approved", {
+             method: "POST",
+             headers: {
+                 "Content-Type": "application/json"
+             },
+             body: JSON.stringify(requestData)
+         })
+         .then(response => response.json())
+         .then(data => {
+             console.log("Backend response:", data);
+             console.log('response message:',data.Message);
+             if(!data.Status)
+             {
+                console.error("Token or visitId not found in the URL.");
+             window.location.href = "http://127.0.0.1:5505/404.html";
+             return;  
+             }
+         })
+         .catch(error => {
+             console.error("Error sending data to backend:", error);
+         });
+     }
+ </script>
+</body>
+</html>

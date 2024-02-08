@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Date</title>
+    <style>
+     body {
+         font-family: 'Arial', sans-serif;
+         background-color: #f4f4f4;
+         margin: 0;
+         padding: 0;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+     }
+
+     h1 {
+         color: #333;
+         text-align: center;
+     }
+
+     #visitorData {
+         background-color: #fff;
+         border-radius: 8px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         padding: 20px;
+         margin-top: 20px;
+         max-width: 400px;
+         width: 100%;
+     }
+
+     p {
+         margin: 10px 0;
+         color: #555;
+     }
+
+     #visitorImage {
+         /* margin-top: 20px;
+         max-width: 100%; */
+         width: 250px;
+         height: 280px;
+         margin-top: 20px;
+         border-radius: 8px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     }
+ </style>
+</head>
+<body>
+    <h1>Visitor Information</h1>
+    <div id="visitorData"></div>
+    <img id="visitorImage"  alt="Visitor Image">
+
+    <script>
+        
+        const storedData = sessionStorage.getItem('apiResponseData');
+
+       
+        if (storedData) {
+            
+            const data = JSON.parse(storedData);
+
+            const visitorDataDiv = document.getElementById('visitorData');
+            visitorDataDiv.innerHTML = `
+                <p>Email: ${data.emailAddress}</p>
+                <p>Name: ${data.firstName} ${data.lastName}</p>
+                <p>Phone Number: ${data.phoneNumber}</p>
+                <p>Gender: ${data.gender}</p>
+                <p>HostEmail: ${data.hostEmail}</p>
+                <p>VisitDate:${data.visitDate}</p>
+                <P>VisitTime:${data.visitTime}</P>
+                <p>VisitStatus: Approved </p>
+            `;
+          //   const image = "Host2.jpg"
+            const visitorImage = document.getElementById('visitorImage');
+            console.log(image);
+            visitorImage.src = `https://localhost:7075/api/images/${data.image}`;
+        } else {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

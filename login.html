@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- Basic -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Site Metas -->
+    <meta charset="UTF-8" />
+	<meta name="keywords" content="Triple Forms Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- <title>Royal</title> -->
+    <title>SecureGuard</title>
+     <!-- web-fonts -->
+	<link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext"
+    rel="stylesheet">
+   <!-- //web-fonts -->
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+    <link href="css/loginStyle.css" rel="stylesheet" type="text/css" media ="all"/>
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Roboto:400,500&display=swap"
+        rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext"
+	 rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- responsive style -->
+      <link href="css/responsive.css" rel="stylesheet" /> 
+
+</head>
+
+<body>
+    <!-- header section strats -->
+    <header class="header_section">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="#">
+                    <div class="logo_box">
+                        <h5>SecureGuard</h5><img src="images/SecureGuardLogo2.png" alt="" />
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mr-2">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About Us </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="service.html">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html">Visit Request</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html">Login </a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control nav_search-input mr-sm-2 d-none" type="search" placeholder="Search"
+                            aria-label="Search" value="" />
+                        <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-bg">
+		<!-- title -->
+		<h1>SecureGuard Management</h1>/
+		<!-- //title -->
+		<div class="sub-main-w3">
+			<div class="image-style">
+
+			</div>
+			<!-- vertical tabs -->
+			<div class="vertical-tab">
+				<div id="section1" class="section-w3ls">
+					<input type="radio" name="sections" id="option1" checked>
+					<label for="option1" class="icon-left-w3pvt"><span class="fa fa-user-circle" aria-hidden="true"></span>Login</label>
+					<article>
+						<form id="loginForm" action="/api/User/Login" method="post">
+							<h3 class="legend">Login Here</h3>
+							<div class="input">
+								<span class="fa fa-envelope-o" aria-hidden="true"></span>
+								<input type="email" placeholder="Email" name="email" id="loginemail" required />
+							</div>
+							<div class="input">
+								<span class="fa fa-key" aria-hidden="true"></span>
+								<input type="password" placeholder="Password" name="password" id="loginpassword" required />
+							</div>
+							<button type="button" onclick="performLogin()" class="btn submit">Login</button>
+							<a href="#" class="bottom-text-w3ls">Forgot Password?</a>
+						</form>
+					</article>
+				</div>
+                
+
+                <div id="section2" class="section-w3ls">
+                    <input type="radio" name="sections" id="option2">
+                    <label for="option2" class="icon-left-w3pvt"><span class="fa fa-pencil-square" aria-hidden="true"></span>Send Request</label>
+                    <article>
+                        <form action="/api/Visitor/Register" method="post" enctype="multipart/form-data">
+                            <h3 class="legend">Visit Request</h3>
+                            <div class="input">
+                                <span class="fa fa-user-o" aria-hidden="true"></span>
+                                <input type="text" placeholder="FirstName" name="firstName" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="text" placeholder="LastName" name="lastName" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="email" placeholder="HostEmail" name="hostEmail" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="email" placeholder="Email" name="email" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="tel" placeholder="PhoneNumber" name="phoneNumber" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <!-- <label for="gender" class="enums">Gender:</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select> -->
+
+                                <label for="male">Male</label>
+                                <input type="radio" id="male" name="Gender" value="Male" required>
+
+                                <label for="female">Female</label>
+                                <input type="radio" id="female" name="Gender" value="Female" required><br>
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="file" name="image" accept=".jpg, .jpeg, .png" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="date" placeholder="VisitDate" name="visitDate" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <input type="time" placeholder="VisitTime" name="visitTime" required />
+                            </div>
+                            <div class="input">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                                <label for="visitReason" class="enums">Visit Reason:</label>
+                                <select id="visitReason" name="visitReason" required>
+                                    <option value="Personal">Personal</option>
+                                    <option value="Official">Official</option>
+                                    <option value="Ceremony">Ceremony</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn submit">Send Request</button>
+                        </form>
+                    </article>
+                </div>
+                        
+				<div id="section3" class="section-w3ls">
+					<input type="radio" name="sections" id="option3">
+					<label for="option3" class="icon-left-w3pvt"><span class="fa fa-lock" aria-hidden="true"></span>Forgot Password?</label>
+					<article>
+						<form action="#" method="post">
+							<h3 class="legend last">Reset Password</h3>
+							<p class="para-style">Enter your email address below and we'll send you an email with instructions.</p>
+							<p class="para-style-2"><strong>Need Help?</strong> Learn more about how to <a href="#">retrieve an existing
+									account.</a></p>
+							<div class="input">
+								<span class="fa fa-envelope-o" aria-hidden="true"></span>
+								<input type="email" placeholder="Email" name="email" required />
+							</div>
+							<button type="submit" class="btn submit last-btn">Reset</button>
+						</form>
+					</article>
+				</div>
+			</div>
+			<!-- //vertical tabs -->
+			<div class="clear"></div>
+		</div>
+	</div>
+	
+    <!-- info section -->
+    <section class="info_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class=" col-md-4 info_detail">
+                    <div>
+                        <p>
+                            Explore the impact of our well-crafted visitor management systems.
+                            With strategic information arrangement, premier desktop tools prioritize authentic
+                            content.
+                            'Innovative visitor management' unveils evolving solutions.
+                            Our success stories reflect modern security and efficiency needs,
+                            shaping intentional and serendipitous journeys.
+                        </p>
+                    </div>
+                </div>
+                <div class=" col-md-4 address_container">
+                    <div>
+                        <h3>
+                            Address
+                        </h3>
+                        <div class="address_link-container">
+                            <a href="">
+                                <img src="images/location.png" alt="">
+                                <span> Address: Gbonagun Estate,Obantoko,Abeokuta,OgunState.
+                                </span>
+                            </a>
+                            <a href="">
+                                <img src="images/phone.png" alt="">
+                                <span> Tel: +234 4353 343 4543
+                                </span>
+                            </a>
+                            <a href="">
+                                <img src="images/mail.png" alt="">
+                                <span>
+                                    Email: secureguardwebsite@gmail.com
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-4 news_container">
+                    <div>
+                        <div>
+                            <h3>
+                                newsletter
+
+                            </h3>
+                            <form action="">
+                                <input type="email" placeholder="ENTER YOUR EMAIL">
+                                <div>
+                                    <button type="submit">
+                                        Subscribe
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="social_container">
+                            <div>
+                                <img src="images/fb.png" alt="">
+                            </div>
+                            <div>
+                                <img src="images/twitter.png" alt="">
+                            </div>
+                            <div>
+                                <img src="images/linkedin.png" alt="">
+                            </div>
+                            <div>
+                                <img src="images/youtube.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="spacer"></div>
+    <section class="container-fluid footer_section">
+        <p>
+            Copyright &copy; 2023 All Rights Reserved By
+            <a href="index.html">Secure Guard</a>
+        </p>
+    </section>
+
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
+    </script>
+    <script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+    <script type="text/javascript">
+        $(".owl-carousel").owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            navText: [],
+            autoplay: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(".nav_search-btn").click(function () {
+            if ($(".nav_search-input").hasClass("d-none")) {
+                event.preventDefault();
+                $(".nav_search-input")
+                    .animate({
+                        left: "-1000px"
+                    },
+                        "1000000"
+                    )
+                    .removeClass("d-none");
+            } else {
+                $(".nav_search-input")
+                    .animate({
+                        left: "0px"
+                    },
+                        "1000000"
+                    )
+                    .addClass("d-none");
+            }
+        });
+    </script>
+
+<script src="js/login.js"></script>
+<script src="js/visitRequest.js"></script>
+</body>
+
+</html>

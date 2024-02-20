@@ -11,7 +11,7 @@ function performLogin() {
     const a = JSON.stringify(credentials);
     console.log(a);
 
-    fetch('https://localhost:7075/api/User/Login', {
+    fetch('http://secureguard-001-site1.anytempurl.com/api/User/Login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,6 +20,7 @@ function performLogin() {
     })
         .then(response => {
             if (!response.ok) {
+                alert("Invalid email or Password");
                 throw new Error('Invalid email or password');
             }
             return response.json();

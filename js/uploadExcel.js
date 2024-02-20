@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const headers = new Headers();
             addAuthorizationHeader(headers);
-            window.location.href = 'https://localhost:7075/api/Excel/Export/ExcelTemplate';
+            window.location.href = 'http://secureguard-001-site1.anytempurl.com/api/Excel/Export/ExcelTemplate';
         } catch (error) {
             console.error('Error:', error);
             alert('An error occurred while downloading the file.');
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('file', fileInput.files[0]);
             formData.append('roleId', roleIdSelect.value);
 
-            const response = await fetch('https://localhost:7075/api/Excel/ImportAndSave', {
+            const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Excel/ImportAndSave', {
                 method: 'POST',
                 body: formData,
                 headers: headers,

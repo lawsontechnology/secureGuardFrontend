@@ -107,7 +107,7 @@ const getUserEmailFromToken = (token) => {
  
 	if (token) {
 	    try {
-		   const response = await fetch('https://localhost:7075/api/Visitor/GetAll', {
+		   const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/GetAll', {
 			  method: 'GET',
 			  headers: {
 				 'Authorization': `Bearer ${token}`
@@ -119,7 +119,7 @@ const getUserEmailFromToken = (token) => {
  
 		   const tableBody = document.querySelector('.table-data tbody');
 		   tableBody.innerHTML = '';
-		   const baseUrl = 'https://localhost:7075/api/images/';
+		   const baseUrl = 'http://secureguard-001-site1.anytempurl.com/api/images/';
  
 		   sortedData.slice(0, 10).forEach((visitor) => {
 			  const imageSrc = `${baseUrl}${visitor.image}`;

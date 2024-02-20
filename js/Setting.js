@@ -19,7 +19,7 @@
 
                 const formData = new FormData(form);
 
-                const response = await fetch(`https://localhost:7075/api/User/Update/${userId}`, {
+                const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/User/Update/${userId}`, {
                     method: 'PUT',
                     body: formData,
                     headers: headers,

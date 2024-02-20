@@ -26,16 +26,16 @@ $(document).ready(function () {
         }
     });
 
-    $.get('https://localhost:7075/api/User/GetAll/Users', function (data) {
+    $.get('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Users', function (data) {
         console.log(data);
         updateTable('userTable', data);
     });
 
-    $.get('https://localhost:7075/api/User/GetAll/Securities', function (data) {
+    $.get('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Securities', function (data) {
         updateCardNumber('Security Personnel', data.length);
     });
 
-    $.get('https://localhost:7075/api/User/GetAll/Hosts', function (data) {
+    $.get('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Hosts', function (data) {
         updateCardNumber('Total Host', data.length);
     });
 });

@@ -15,7 +15,7 @@ domReady(function () {
         const id = extractIdFromQRCode(decodeText);
 
         if (id) {
-            const apiUrl = `https://localhost:7075/api/Visitor/Visit/Id?visitId=${id}`;
+            const apiUrl = `http://secureguard-001-site1.anytempurl.com/api/Visitor/Visit/Id?visitId=${id}`;
 
             fetch(apiUrl, {
                 method: "GET",

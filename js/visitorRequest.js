@@ -12,7 +12,7 @@ const toBackendJSON = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/Visitor/GetAll', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/GetAll', {
             method: 'GET',
             headers: headers,
         });
@@ -30,7 +30,7 @@ const toBackendCSV = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/Visitor/GetAll', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/GetAll', {
             method: 'GET',
             headers: headers,
         });
@@ -52,7 +52,7 @@ const toBackendExcel = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/Visitor/GetAll', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/GetAll', {
             method: 'GET',
             headers: headers,
         });
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const headers = new Headers();
             addAuthorizationHeader(headers);
 
-            const response = await fetch('https://localhost:7075/api/Visitor/GetAll', {
+            const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/GetAll', {
                 method: 'GET',
                 headers: headers,
             });
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             tableBody.innerHTML = '';
 
-            const baseUrl = 'https://localhost:7075/api/images/';
+            const baseUrl = 'http://secureguard-001-site1.anytempurl.com/api/images/';
 
             sortedData.slice(0, 30).forEach((visitor, index) => {
             const row = document.createElement('tr');
@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded', async function () {
              <td><img src="${baseUrl}${visitor.image}" alt="${visitor.firstName} ${visitor.lastName}">${visitor.firstName} ${visitor.lastName}</td>
              <td>${visitor.visits.length > 0 ? visitor.visits[0].visitReason || 'N/A' : 'N/A'}</td>
              <td>${visitor.visits.length > 0 ? visitor.visits[0].visitDate || 'N/A' : 'N/A'}</td>
-             <td>${visitor.visits.length > 0 ? visitor.visits[0].visitTime || 'N/A' : 'N/A'}</td>
              <td>${visitor.visits.length > 0 ? visitor.visits[0].visitStatus || 'N/A' : 'N/A'}</td>
              <td>${visitor.emailAddress || 'N/A'}</td>
              <td>${visitor.phoneNumber || 'N/A'}</td>
-            `;
+             `;
+            //  <td>${visitor.visits.length > 0 ? visitor.visits[0].visitTime || 'N/A' : 'N/A'}</td>
 
              tableBody.appendChild(row);
            });

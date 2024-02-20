@@ -1,6 +1,6 @@
 
   document.addEventListener('DOMContentLoaded', function () {
-    const apiUrl = 'https://localhost:7075/api/User';
+    const apiUrl = 'http://secureguard-001-site1.anytempurl.com/api/User';
 
    
     const addAuthorizationHeader = (headers) => {

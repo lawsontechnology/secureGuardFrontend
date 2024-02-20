@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
              
             try {
                 const formData = new FormData(form);
-                const response = await fetch('https://localhost:7075/api/Visitor/Register', {
+                const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/Register', {
                     method: 'POST',
                     body: formData,
                 });
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
          const gender = form.querySelector('[name="gender"]').value.trim();
          const image = form.querySelector('[name="image"]').files[0];
          const visitDate = form.querySelector('[name="visitDate"]').value.trim();
-         const visitTime = form.querySelector('[name="visitTime"]').value.trim();
+         const visitTime = form.querySelector('[name="visitDate"]').value.trim();
          const visitReason = form.querySelector('[name="visitReason"]').value.trim();
 
          

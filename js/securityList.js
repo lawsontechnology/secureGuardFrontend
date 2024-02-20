@@ -12,7 +12,7 @@ const toBackendJSON = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/User/GetAll/Securities', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Securities', {
             method: 'GET',
             headers: headers,
         });
@@ -30,7 +30,7 @@ const toBackendCSV = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/User/GetAll/Securities', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Securities', {
             method: 'GET',
             headers: headers,
         });
@@ -52,7 +52,7 @@ const toBackendExcel = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/User/GetAll/Securities', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Securities', {
             method: 'GET',
             headers: headers,
         });
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const headers = new Headers();
             addAuthorizationHeader(headers);
 
-            const response = await fetch('https://localhost:7075/api/User/GetAll/Securities', {
+            const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Securities', {
                 method: 'GET',
                 headers: headers,
             });
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 const headers = new Headers();
                                 addAuthorizationHeader(headers);
 
-                                const response = await fetch(`https://localhost:7075/api/User/Delete/${idToDelete}`, {
+                                const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/User/Delete/${idToDelete}`, {
                                     method: 'DELETE',
                                     headers: headers,
                                 });

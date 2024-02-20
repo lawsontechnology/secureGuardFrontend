@@ -20,7 +20,7 @@
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-           fetch('https://localhost:7075/api/User/Register/User', {
+           fetch('http://secureguard-001-site1.anytempurl.com/api/User/Register/User', {
               method: 'POST',
               headers: headers,
               body: formData

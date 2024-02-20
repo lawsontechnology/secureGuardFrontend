@@ -19,7 +19,7 @@ async function createRole() {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('https://localhost:7075/api/Role/Create', {
+        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Role/Create', {
             method: 'POST',
             body: formData,
             headers: headers,

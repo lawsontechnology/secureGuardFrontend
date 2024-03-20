@@ -5,9 +5,7 @@
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Site Metas -->
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -124,7 +122,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="index.html" id="signOutBtn">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
@@ -134,7 +132,6 @@
             </ul>
         </div>
 
-        <!-- ========================= Main ==================== -->
         <div class="main">
             <div class="topbar">
                 <div class="toggle">
@@ -153,12 +150,11 @@
                 </div>
             </div>
 
-            <!-- ======================= Cards ================== -->
             <div class="cardBox">
                 <div class="card">
                     <div>
-                        <div class="numbers">1,504</div>
-                        <div class="cardName">Daily View</div>
+                        <div class="numbers" id="totalVisitors">Loading....</div>
+                        <div class="cardName">Total Visitor</div>
                     </div>
 
                     <div class="iconBx">
@@ -179,8 +175,8 @@
 
                 <div class="card">
                     <div>
-                        <div class="numbers">700</div>
-                        <div class="cardName">Visit Request</div>
+                        <div class="numbers" id="totalRole">Loading...</div>
+                        <div class="cardName">Total Roles</div>
                     </div>
 
                     <div class="iconBx">
@@ -190,7 +186,7 @@
 
                 <div class="card">
                     <div>
-                        <div class="numbers">40</div>
+                        <div class="numbers">Loading...</div>
                         <div class="cardName">Security Personnel</div>
                     </div>
 
@@ -200,12 +196,11 @@
                 </div>
             </div>
 
-            <!-- ================ Order Details List ================= -->
             <div class="details">
                 <div class="recentOrders">
                      <div class="cardHeader">
                         <h2>Recent Users</h2>
-                        <a href="#" class="btn">View All</a>
+                        <!-- <a href="#" class="btn">View All</a> -->
                     </div>
                     <table id="userTable">
                         <thead>
@@ -225,19 +220,54 @@
                     </table>
                 </div>
 
-                <!-- ================= New Customers ================ -->
                 <div class="recentCustomers">
                     <div class="cardHeader">
-                        <h2> Top [10] Hosts</h2>
+                        <h2> Top Hosts</h2>
                     </div>
 
                     <table>
                         <tr>
                             <td width="60px">
+                                <div class="imgBx"><img src="images/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Lawal ola<br> <span>Admin</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
                                 <div class="imgBx"><img src="images/customer02.jpg" alt=""></div>
                             </td>
                             <td>
-                                <h4>David <br> <span>Italy</span></h4>
+                                <h4>adeniji adeyinka<br> <span>Host</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="img/visitor5.jpeg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Lawal fatiu <br> <span>Host</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="img/visitor6.jpeg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>akolade ayinde<br> <span>Host</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="img/visitor5.jpeg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Lawson Toheeb <br> <span>Host</span></h4>
                             </td>
                         </tr>
 
@@ -246,74 +276,20 @@
                                 <div class="imgBx"><img src="images/customer01.jpg" alt=""></div>
                             </td>
                             <td>
-                                <h4>Amit <br> <span>India</span></h4>
+                                <h4>Lawson Ruk<br> <span>Host</span></h4>
                             </td>
                         </tr>
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="images/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="images/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- =========== Scripts =========  -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="js/admin.js"></script>
 
-    <!-- ====== ionicons ======= -->
     <script type="module"
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule

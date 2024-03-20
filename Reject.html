@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rejection Page</title>
     <style>
-         body {
-              font-family: Arial, sans-serif;
-              overflow-y: hidden;
+        body {
+            font-family: Arial, sans-serif;
+            overflow-y: hidden;
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #3627b8, #302b63, #4f4fa8);
@@ -51,12 +52,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <img class="logo" src="/img/cancel_77947.png" alt="Logo">
 
         <h1>Rejection Notice</h1>
-        <p>request has been rejected.</p>
+        <p>Request has been rejected.</p>
 
         <div class="button-container">
             <a href="http://127.0.0.1:5505/index.html" class="button">Return to Home</a>
@@ -64,44 +66,52 @@
     </div>
 
     <script>
-     document.addEventListener("DOMContentLoaded", function () {
-         sendValuesToBackend();
-     });
-
-     function sendValuesToBackend() {
-
-         const urlParams = new URLSearchParams(window.location.search);
-         const token = urlParams.get('token');
-         const visitId = urlParams.get('visitId');
-         alert(visitId);
-         alert(token);
-         
-         if (!token || !visitId) {
-             console.error("Token or visitId not found in the URL.");
-          //    window.location.href = "http://127.0.0.1:5505/404.html";
-             return;
-         }
-
-         var requestData = {
-             token: token,
-             visitId: visitId
-         };
-
-         fetch("http://localhost:7075/api/Visitor/Request/Reject", {
-             method: "POST",
-             headers: {
-                 "Content-Type": "application/json"
-             },
-             body: JSON.stringify(requestData)
-         })
-         .then(response => response.json())
-         .then(data => {
-             console.log("Backend response:", data);
-         })
-         .catch(error => {
-             console.error("Error sending data to backend:", error);
-         });
-     }
- </script>
+        document.addEventListener("DOMContentLoaded", function () {
+            checkTokenAndReject();
+        });
+    
+        function checkTokenAndReject() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const visitId = urlParams.get('visitId');
+    
+            if (!token || !visitId) {
+                console.error("Token or visitId not found in the URL.");
+                window.location.href = "http://127.0.0.1:5505/404.html";
+                return;
+            }
+    
+            fetch(`http://localhost:7075/api/Token/Validation?token=${token}`, {
+                method: "POST",
+            })
+            .then(response => response.json())
+            .then(tokenValidationData => {
+    
+                if (tokenValidationData.Status) {
+                    return fetch(`https://localhost:7075/api/Visitor/Request/Reject?visitId=${visitId}`, {
+                        method: "POST"
+                    });
+                } else {
+                    console.error("Token validation failed.");
+                    window.location.href = "http://127.0.0.1:5505/404.html";
+                }
+            })
+            .then(rejectResponse => rejectResponse.json())
+            .then(data => {
+                console.log("Reject response:", data);
+    
+                if (!data.Status) {
+                    console.error("Visit Reject failed.");
+                    window.location.href = "http://127.0.0.1:5505/404.html";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                window.location.href = "http://127.0.0.1:5505/404.html";
+            });
+        }
+    </script>
+    
 </body>
+
 </html>

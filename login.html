@@ -25,6 +25,7 @@
     <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext"
 	 rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
       <link href="css/responsive.css" rel="stylesheet" /> 
 
@@ -86,7 +87,9 @@
 			<div class="image-style">
 
 			</div>
+            
 			<div class="vertical-tab">
+                <div id="errorMessage" style="color: red;"></div>
 				<div id="section1" class="section-w3ls">
 					<input type="radio" name="sections" id="option1" checked>
 					<label for="option1" class="icon-left-w3pvt"><span class="fa fa-user-circle" aria-hidden="true"></span>Login</label>
@@ -101,7 +104,7 @@
 								<span class="fa fa-key" aria-hidden="true"></span>
 								<input type="password" placeholder="Password" name="password" id="loginpassword" required />
 							</div>
-							<button type="button" onclick="performLogin()" class="btn submit">Login</button>
+							<button type="button" id="loginButton" onclick="performLogin()" class="btn submit">Login</button>
 							<a href="#" class="bottom-text-w3ls">Forgot Password?</a>
 						</form>
 					</article>
@@ -112,56 +115,45 @@
                     <input type="radio" name="sections" id="option2">
                     <label for="option2" class="icon-left-w3pvt"><span class="fa fa-pencil-square" aria-hidden="true"></span>Send Request</label>
                     <article>
-                        <form action="/api/Visitor/Register" method="post" enctype="multipart/form-data">
+                        <form id="visitRequestForm" action="https://localhost:7075/api/Visitor/Register" method="post" enctype="multipart/form-data">
                             <h3 class="legend">Visit Request</h3>
                             <div class="input">
                                 <span class="fa fa-user-o" aria-hidden="true"></span>
-                                <input type="text" placeholder="FirstName" name="firstName" required />
+                                <input type="text" placeholder="FirstName" id="firstName" required />
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
-                                <input type="text" placeholder="LastName" name="lastName" required />
+                                <input type="text" placeholder="LastName" id="lastName" required />
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
-                                <input type="email" placeholder="HostEmail" name="hostEmail" required />
+                                <input type="email" placeholder="HostEmail" id="hostEmail" required />
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
-                                <input type="email" placeholder="Email" name="email" required />
+                                <input type="email" placeholder="Email" id="email" required />
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
-                                <input type="tel" placeholder="PhoneNumber" name="phoneNumber" required />
+                                <input type="tel" placeholder="PhoneNumber" id="phoneNumber" required />
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
-                                <!-- <label for="gender" class="enums">Gender:</label>
-                                <select id="gender" name="gender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select> -->
-
                                 <label for="male">Male</label>
                                 <input type="radio" id="male" name="Gender" value="Male" required>
-
+                        
                                 <label for="female">Female</label>
                                 <input type="radio" id="female" name="Gender" value="Female" required><br>
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
-                                <input type="file" name="image" accept=".jpg, .jpeg, .png" required />
+                                <input type="file" id="image" accept=".jpg, .jpeg" required />
                             </div>
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
                                 <span>VisitDate/VisitTime</span>
-                                <input type="datetime-local" placeholder="VisitDate" name="visitDate" required />
+                                <input type="datetime-local" placeholder="VisitDate" id="visitDate" required />
                             </div>
-                            <!-- <div class="input">
-                                <span class="fa fa-key" aria-hidden="true"></span>
-                                <span>VisitTime</span>
-                                <input type="time" placeholder="VisitTime" name="visitTime" required />
-                            </div> -->
                             <div class="input">
                                 <span class="fa fa-key" aria-hidden="true"></span>
                                 <label for="visitReason" class="enums">Visit Reason:</label>
@@ -171,8 +163,9 @@
                                     <option value="Ceremony">Ceremony</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn submit">Send Request</button>
+                            <button type="submit" id="submitBtn" class="btn submit">Send Request</button>
                         </form>
+                        
                     </article>
                 </div>
                         
@@ -286,6 +279,7 @@
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
 		addEventListener("load", function () {
 			setTimeout(hideURLbar, 0);

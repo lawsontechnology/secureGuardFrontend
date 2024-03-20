@@ -1,4 +1,30 @@
 const token = localStorage.getItem('jwtToken');
+const pageSize = 10;
+// const getUserRoleFromToken = (token) => {
+//     try {
+//         const decoded = JSON.parse(atob(token.split('.')[1]));
+//         return decoded?.role;
+//     } catch (error) {
+//         console.error('Error decoding JWT token:', error);
+//         return null;
+//     }
+// };
+
+// const checkUserRole = (token, requiredRole) => {
+//     const userRole = getUserRoleFromToken(token);
+//     return userRole && userRole.includes(requiredRole);
+// };
+
+// const redirectToLogin = () => {
+//     window.location.href = 'login.html';
+// };
+
+// const requiredRole = 'Admin';
+// const hasRequiredRole = checkUserRole(token, requiredRole);
+
+// if (!hasRequiredRole) {
+//     redirectToLogin();
+// } else {
 
 const addAuthorizationHeader = (headers) => {
     const token = localStorage.getItem('jwtToken');
@@ -7,12 +33,12 @@ const addAuthorizationHeader = (headers) => {
     }
 };
 
-const toBackendJSON = async function () {
+const toBackendJSON = async function (pageNumber = 1) {
     try {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Hosts', {
+        const response = await fetch(`https://localhost:7075/api/User/All/Hosts?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
             method: 'GET',
             headers: headers,
         });
@@ -25,12 +51,12 @@ const toBackendJSON = async function () {
     }
 }
 
-const toBackendCSV = async function () {
+const toBackendCSV = async function (pageNumber = 1) {
     try {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Hosts', {
+        const response = await fetch(`https://localhost:7075/api/User/All/Hosts?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
             method: 'GET',
             headers: headers,
         });
@@ -47,12 +73,12 @@ const toBackendCSV = async function () {
     }
 }
 
-const toBackendExcel = async function () {
+const toBackendExcel = async function (pageNumber = 1) {
     try {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Hosts', {
+        const response = await fetch(`https://localhost:7075/api/User/All/Hosts?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
             method: 'GET',
             headers: headers,
         });
@@ -77,12 +103,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const tableBody = document.querySelector('#hostList tbody');
     const searchButton = document.getElementById('searchButton')
 
-    const updateTableData = async () => {
+    const updateTableData = async (pageNumber = 1) => {
         try {
             const headers = new Headers();
             addAuthorizationHeader(headers);
 
-            const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/User/GetAll/Hosts', {
+            const response = await fetch(`https://localhost:7075/api/User/All/Hosts?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
                 method: 'GET',
                 headers: headers,
             });
@@ -92,11 +118,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             tableBody.innerHTML = '';
 
-            sortedData.slice(0, 13).forEach((host, index) => {
+            sortedData.slice(0, pageSize).forEach((host, index) => {
+                const serialNumber = (pageNumber - 1) * pageSize + index + 1;
                 const row = document.createElement('tr');
-  
+
                 row.innerHTML = `
-                    <td>${index + 1}</td>
+                    <td>${serialNumber || ''}</td>
                     <td>${host.firstName || 'N/A'}</td>
                     <td>${host.lastName || 'N/A'}</td>
                     <td>${host.email || 'N/A'}</td>
@@ -107,40 +134,124 @@ document.addEventListener('DOMContentLoaded', async function () {
                `;
 
                 tableBody.appendChild(row);
-           });
+            });
 
-           document.querySelectorAll('.delete-btn').forEach(button => {
+            const previousButton = document.getElementById('previous');
+            const nextButton = document.getElementById('next');
+
+            previousButton.disabled = pageNumber === 1;
+            nextButton.disabled = data.length < pageSize;
+
+            let currentPage = 1;
+
+            previousButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateTableData(currentPage);
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentPage++;
+                updateTableData(currentPage);
+            });
+
+
+            let scrollToTopIcon = document.getElementById('scrollToTop');
+
+            window.onscroll = function () {
+                scrollFunction();
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopIcon.style.display = "block";
+                } else {
+                    scrollToTopIcon.style.display = "none";
+                }
+            }
+
+
+            scrollToTopIcon.addEventListener('click', function () {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            });
+
+            const json_btn = document.getElementById('toJSON');
+            const csv_btn = document.getElementById('toCSV');
+            const excel_btn = document.getElementById('toEXCEL');
+
+            json_btn.onclick = async () => {
+                try {
+                    const json = await toBackendJSON(pageNumber);
+                    if (json !== null) {
+                        downloadFile(json, 'json');
+                    }
+                } catch (error) {
+                    console.error('Error exporting JSON:', error);
+                }
+            }
+
+            csv_btn.onclick = async () => {
+                try {
+                    const csv = await toBackendCSV(pageNumber);
+                    if (csv !== null) {
+                        downloadFile(csv, 'csv', 'visitor_list');
+                    }
+                } catch (error) {
+                    console.error('Error exporting CSV:', error);
+                }
+            }
+
+            excel_btn.onclick = async () => {
+                try {
+                    const excel = await toBackendExcel(pageNumber);
+                    if (excel !== null) {
+                        downloadFile(excel, 'excel');
+                    }
+                } catch (error) {
+                    console.error('Error exporting Excel:', error);
+                }
+            }
+
+            document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', async () => {
-                     const idToDelete = button.dataset.logId;
+                    const idToDelete = button.dataset.logId;
 
-                     if (idToDelete) {
-                          const userConfirmed = window.confirm('Are you sure you want to delete this log entry?');
+                    if (idToDelete) {
+                        const userConfirmed = window.confirm('Are you sure you want to delete this log entry?');
 
-                          if (userConfirmed) {
-                               try {
-                                    const headers = new Headers();
-                                    addAuthorizationHeader(headers);
+                        if (userConfirmed) {
+                            try {
+                                const headers = new Headers();
+                                addAuthorizationHeader(headers);
 
-                                    const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/AuditLog/Delete/${idToDelete}`, {
-                                         method: 'DELETE',
-                                         headers: headers,
-                                    });
+                                const response = await fetch(`https://localhost:7075/api/User/${idToDelete}`, {
+                                    method: 'DELETE',
+                                    headers: headers,
+                                });
 
-                                    const result = await response.json();
-                                    console.log(result);
+                                const result = await response.json();
+                                console.log(result);
 
-                                    updateTableData();
-                               } catch (error) {
-                                    console.error('Error deleting log:', error);
-                               }
-                          }
-                     }
+                                updateTableData();
+                            } catch (error) {
+                                console.error('Error deleting log:', error);
+                            }
+                        }
+                    }
                 });
-           });
+            });
         } catch (error) {
-            console.error('Error fetching data from backend:', error);
+            console.error('Error fetching data from backend:' + error);
+            Toastify({
+                text: 'An unexpected error occurred.' + error,
+                backgroundColor: 'red',
+            }).showToast();
         }
     };
+      
+    
     const searchTable = () => {
         const searchTerm = search.value.trim().toLowerCase();
         const rows = tableBody.getElementsByTagName('tr');
@@ -153,24 +264,34 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const cellText = cell.textContent.toLowerCase();
                 if (cellText.includes(searchTerm)) {
                     matchFound = true;
-                    cell.classList.add('highlighted');
-                } else {
-                    cell.classList.remove('highlighted');
+                    break;
                 }
             }
-
+            
             if (matchFound) {
-                row.classList.add('highlighted');
+                row.style.display = '';
             } else {
-                row.classList.remove('highlighted');
+                row.style.display = 'none';
             }
         }
     };
-
+    
     updateTableData();
     search.addEventListener('input', searchTable);
     searchButton.addEventListener('click', function () {
         searchTable();
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+    
+        const signOutBtn = document.getElementById('signOutBtn');
+    
+        if (signOutBtn) {
+            signOutBtn.addEventListener('click', function (event) {
+                event.preventDefault(); 
+                localStorage.removeItem('jwtToken');
+                window.location.href = 'login.html';
+            });
+        }
     });
     const exportFileCheckbox = document.getElementById('export-file');
     exportFileCheckbox.addEventListener('change', function () {
@@ -179,5 +300,5 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 });
-
+// }
 

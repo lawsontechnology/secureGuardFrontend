@@ -1,5 +1,5 @@
 const token = localStorage.getItem('jwtToken');
-
+const pageSize = 20;
 const addAuthorizationHeader = (headers) => {
     if (token) {
         headers.append('Authorization', 'Bearer ' + token);
@@ -16,20 +16,17 @@ const getUserEmailFromToken = (token) => {
     }
 };
 
-const toBackendJSON = async function () {
+const toBackendJSON = async function (pageNumber) {
     const token = localStorage.getItem('jwtToken');
     const userEmail = getUserEmailFromToken(token);
-
+    console.log('User Email:', userEmail);
     try {
         const headers = new Headers();
         addAuthorizationHeader(headers);
-        
-           
-        const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}`, {
+        const response = await fetch(`https://localhost:7075/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}&PageNumber=${pageNumber}&PageSize=${pageSize}`, {
             method: 'GET',
             headers: headers,
         });
-
         const data = await response.json();
         return JSON.stringify(data, null, 4);
     } catch (error) {
@@ -38,7 +35,7 @@ const toBackendJSON = async function () {
     }
 };
 
-const toBackendCSV = async function () {
+const toBackendCSV = async function (pageNumber) {
     const token = localStorage.getItem('jwtToken');
     const userEmail = getUserEmailFromToken(token);
 
@@ -46,7 +43,7 @@ const toBackendCSV = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}`, {
+        const response = await fetch(`https://localhost:7075/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}&PageNumber=${pageNumber}&PageSize=${pageSize}`, {
             method: 'GET',
             headers: headers,
         });
@@ -63,7 +60,7 @@ const toBackendCSV = async function () {
     }
 };
 
-const toBackendExcel = async function () {
+const toBackendExcel = async function (pageNumber) {
     const token = localStorage.getItem('jwtToken');
     const userEmail = getUserEmailFromToken(token);
 
@@ -71,7 +68,7 @@ const toBackendExcel = async function () {
         const headers = new Headers();
         addAuthorizationHeader(headers);
 
-        const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}`, {
+        const response = await fetch(`https://localhost:7075/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}&PageNumber=${pageNumber}&PageSize=${pageSize}`, {
             method: 'GET',
             headers: headers,
         });
@@ -96,41 +93,82 @@ document.addEventListener('DOMContentLoaded', async function () {
     const tableBody = document.querySelector('tbody');
     const searchButton = document.getElementById('searchButton')
 
-    const updateTableData = async () => {
+    const updateTableData = async (pageNumber) => {
         const token = localStorage.getItem('jwtToken');
         const userEmail = getUserEmailFromToken(token);
-
         try {
             const headers = new Headers();
             addAuthorizationHeader(headers);
-
-            const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}`, {
+    
+            const response = await fetch(`https://localhost:7075/api/Visitor/AllApproved/Visit?hostEmail=${userEmail}&PageNumber=${pageNumber}&PageSize=${pageSize}`, {
                 method: 'GET',
                 headers: headers,
             });
-
+    
             const data = await response.json();
-
+    
             const sortedData = data.sort((a, b) => new Date(b.VisitDate) - new Date(a.VisitDate));
-
+    
             tableBody.innerHTML = '';
-
-            const baseUrl = 'http://secureguard-001-site1.anytempurl.com/api/images/';
-
-            sortedData.slice(0, 30).forEach((visitor, index) => {
+    
+            const dateFormatter = new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric'
+           });
+               sortedData.slice(0, pageSize).forEach((visitor, index) => {
+                const serialNumber = (pageNumber - 1) * pageSize + index + 1;
                 const row = document.createElement('tr');
+            
+                const formattedDate = dateFormatter.format(new Date(visitor.visitDate));
 
                 row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td><img src="${baseUrl}${visitor.image}" alt="${visitor.firstName} ${visitor.lastName}">${visitor.firstName} ${visitor.lastName}</td>
-                    <td>${visitor.visits.length > 0 ? visitor.visits[0].visitReason || 'N/A' : 'N/A'}</td>
-                    <td>${visitor.visits.length > 0 ? visitor.visits[0].visitDate || 'N/A' : 'N/A'}</td>
+                <td>${serialNumber || ''}</td>
+                    <td><img src="https://localhost:7075/api/images/filename?filename=${visitor.image}" alt="${visitor.firstName} ${visitor.lastName}">${visitor.firstName} ${visitor.lastName}</td>
+                    <td>${visitor.visitReason || 'N/A'}</td>
+                    <td>${formattedDate || ''}</td>
                     <td>${visitor.emailAddress || 'N/A'}</td>
                     <td>${visitor.phoneNumber || 'N/A'}</td>
                     `;
-                    // <td>${visitor.visits.length > 0 ? visitor.visits[0].visitTime || 'N/A' : 'N/A'}</td>
-                    
                 tableBody.appendChild(row);
+            });
+
+            const previousButton = document.getElementById('previous');
+            const nextButton = document.getElementById('next');
+
+            previousButton.disabled = pageNumber === 1;
+            nextButton.disabled = data.length < pageSize;
+
+            previousButton.addEventListener('click', () => {
+                if (pageNumber > 1) {
+                    updateTableData(pageNumber - 1);
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                updateTableData(pageNumber + 1);
+            });
+
+            let scrollToTopIcon = document.getElementById('scrollToTop');
+
+            window.onscroll = function () {
+                scrollFunction();
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopIcon.style.display = "block";
+                } else {
+                    scrollToTopIcon.style.display = "none";
+                }
+            }
+
+            scrollToTopIcon.addEventListener('click', function () {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             });
             const json_btn = document.getElementById('toJSON');
             const csv_btn = document.getElementById('toCSV');
@@ -138,7 +176,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             json_btn.onclick = async () => {
                  try {
-                      const json = await toBackendJSON();
+                      const json = await toBackendJSON(pageNumber);
                       if (json !== null) {
                            downloadFile(json, 'json');
                       }
@@ -149,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             csv_btn.onclick = async () => {
                  try {
-                      const csv = await toBackendCSV();
+                      const csv = await toBackendCSV(pageNumber);
                       if (csv !== null) {
                            downloadFile(csv, 'csv', 'visitor_list');
                       }
@@ -160,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             excel_btn.onclick = async () => {
                  try {
-                      const excel = await toBackendExcel();
+                      const excel = await toBackendExcel(pageNumber);
                       if (excel !== null) {
                            downloadFile(excel, 'excel');
                       }
@@ -173,37 +211,47 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
     };
 
- const searchTable = () => {
-     const searchTerm = search.value.trim().toLowerCase();
-     const rows = tableBody.getElementsByTagName('tr');
+    const searchTable = () => {
+        const searchTerm = search.value.trim().toLowerCase();
+        const rows = tableBody.getElementsByTagName('tr');
 
-     for (const row of rows) {
-         const cells = row.getElementsByTagName('td');
-         let matchFound = false;
+        for (const row of rows) {
+            const cells = row.getElementsByTagName('td');
+            let matchFound = false;
 
-         for (const cell of cells) {
-             const cellText = cell.textContent.toLowerCase();
-             if (cellText.includes(searchTerm)) {
-                 matchFound = true;
-                 cell.classList.add('highlighted');
-             } else {
-                 cell.classList.remove('highlighted');
-             }
-         }
+            for (const cell of cells) {
+                const cellText = cell.textContent.toLowerCase();
+                if (cellText.includes(searchTerm)) {
+                    matchFound = true;
+                    break; 
+                }
+            }
 
-         if (matchFound) {
-             row.classList.add('highlighted');
-         } else {
-             row.classList.remove('highlighted');
-         }
-     }
- };
+            if (matchFound) {
+                row.style.display = ''; 
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    };
      
-    
-    updateTableData();
+    let currentPage = 1;
+    updateTableData(currentPage);
     search.addEventListener('input', searchTable);
     searchButton.addEventListener('click', function () {
      searchTable();
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+    
+        const signOutBtn = document.getElementById('signOutBtn');
+    
+        if (signOutBtn) {
+            signOutBtn.addEventListener('click', function (event) {
+                event.preventDefault(); 
+                localStorage.removeItem('jwtToken');
+                window.location.href = 'login.html';
+            });
+        }
     });
     const exportFileCheckbox = document.getElementById('export-file');
     exportFileCheckbox.addEventListener('change', function () {

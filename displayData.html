@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor Date</title>
+    <title>Visitor Profile </title>
     <style>
      body {
          font-family: 'Arial', sans-serif;
@@ -76,7 +76,7 @@
           //   const image = "Host2.jpg"
             const visitorImage = document.getElementById('visitorImage');
             console.log(image);
-            visitorImage.src = `https://localhost:7075/api/images/${data.image}`;
+            visitorImage.src = `https://localhost:7075/api/images/filename?filename=${data.image}`;
         } else {
             window.location.href = 'index.html';
         }

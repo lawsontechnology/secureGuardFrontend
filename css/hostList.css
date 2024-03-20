@@ -18,9 +18,9 @@
   --black2: #999;
 }
 
-body {
+/* body {
   
-}
+} */
 
 .container {
   position: relative;
@@ -132,7 +132,46 @@ body {
  table {
      width: 100%;
  }
- 
+
+ .pagination{
+  height: 65px;
+ }
+
+ .previous{
+    font-size: 18px;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding-left: 19px;
+    padding-right: 19px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    background-color: #3f35ac;
+    color: #ffffff;
+    border-color: #3f35ac;
+    display: inline-block;
+    padding: 6px 18px;
+    vertical-align: middle;
+    cursor: pointer;
+    height: 44px;
+    margin-top: 10px;
+    margin-right: 35px;
+ }
+ .next{
+    font-size: 18px;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding-left: 19px;
+    padding-right: 19px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    background-color: #3f35ac;
+    color: #ffffff;
+    border-color: #3f35ac;
+    display: inline-block;
+    padding: 6px 18px;
+    vertical-align: middle;
+    cursor: pointer;
+    height: 42px;
+    margin-top: 10px;
+ }
  td img {
      width: 36px;
      height: 36px;
@@ -341,7 +380,7 @@ body {
  
 /* =============== Navigation ================ */
 .navigation {
-    border: px solid green;
+    /* border: 5px solid green; */
     position: fixed;
     width: 300px;
     left: -20px;

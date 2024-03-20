@@ -18,8 +18,7 @@
                 addAuthorizationHeader(headers);
 
                 const formData = new FormData(form);
-
-                const response = await fetch(`http://secureguard-001-site1.anytempurl.com/api/User/Update/${userId}`, {
+                const response = await fetch(`https://localhost:7075/api/User/${userId}`, {
                     method: 'PUT',
                     body: formData,
                     headers: headers,
@@ -30,11 +29,17 @@
                     window.location.href = 'Profile.html';
                 } else {
                     const data = await response.json();
-                    alert('Profile update failed. Please try again.' + data.message);
+                    Toastify({
+                        text: 'Profile update failed. Please try again.' + data.message,
+                        backgroundColor: 'red',
+                    }).showToast();
                 }
             } catch (error) {
                 console.error('Error updating profile:', error);
-                alert('An unexpected error occurred. Please try again.');
+                Toastify({
+                    text: 'An unexpected error occurred. Please try again.',
+                    backgroundColor: 'red',
+                }).showToast();
             }
         }
     });
@@ -53,17 +58,26 @@
         const postalCode = form.querySelector('[name="postalCode"]').value.trim();
 
         if (!/^\d+$/.test(phoneNumber)) {
-            alert('Invalid phone number format!');
+            Toastify({
+                text: 'Invalid phone number format!',
+                backgroundColor: 'red',
+            }).showToast();
             return false;
         }
 
         if (newPassword && !password(newPassword)) {
-            alert('Password must be a minimum of 6 characters, either digits or letters');
+            Toastify({
+                text: 'Password must be a minimum of 6 characters, either digits or letters',
+                backgroundColor: 'red',
+            }).showToast();
             return false;
         }
 
         if (!oldPassword) {
-            alert('Password is required!');
+            Toastify({
+                text: 'Password is required!',
+                backgroundColor: 'red',
+            }).showToast();
             return false;
         }
 
@@ -102,6 +116,19 @@ switchMode.addEventListener('change', function () {
 		document.body.classList.remove('dark');
 	}
 })
+
+document.addEventListener('DOMContentLoaded', function () {
+    
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    if (signOutBtn) {
+        signOutBtn.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'login.html';
+        });
+    }
+});
 
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
  const sidebar = document.getElementById('sidebar');

@@ -3,15 +3,17 @@
 function performLogin() {
     var email = document.getElementById('loginemail').value;
     var password = document.getElementById('loginpassword').value;
-
+    var errorMessageElement = document.getElementById('errorMessage');
+    var loginButton = document.getElementById('loginButton');
     var credentials = {
         email: email,
         password: password,
     };
     const a = JSON.stringify(credentials);
     console.log(a);
+    loginButton.textContent = 'Processing...'; 
 
-    fetch('http://secureguard-001-site1.anytempurl.com/api/User/Login', {
+    fetch('https://localhost:7075/api/User/Login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,28 +22,33 @@ function performLogin() {
     })
         .then(response => {
             if (!response.ok) {
-                alert("Invalid email or Password");
-                throw new Error('Invalid email or password');
+                console.error("Invalid email or Password");
+                errorMessageElement.textContent = "Invalid email or password.";
+                Toastify({
+                    text: 'Invalid Email Or Password',
+                    backgroundColor: 'Red',
+                }).showToast();
+                return Promise.reject("Invalid email or password.");
             }
             return response.json();
         })
         .then(data => {
             console.log('Login successful:', data);
             localStorage.setItem('jwtToken', data.token);
-            // var roles = parseJwt(data.token);
+           
             var roles = Array.from(data.userRoles);
              console.log('Roles extracted from token:', roles);
              redirectBasedOnRole(roles, data.token);
-
-             console.log('Login successful:', data);
-
-             console.log('User roles from server:', data.userRoles);
-             console.log('user token',data.token)
             
         })
         .catch(error => {
             console.error('Login error:', error);
+            errorMessageElement.textContent = "";
+        })
+        .finally(() => {
+            loginButton.textContent = 'Login';
         });
+
 }
 
 function parseJwt(token) {
@@ -60,25 +67,30 @@ function redirectBasedOnRole(roles, token) {
     roles.forEach(role => {
         let roleName = role.name;
 
-        if (roleName === 'Admin') {
-            // alert("Redirecting to Admin Dashboard");
+        if (roleName === 'Admin')
+         {
             localStorage.setItem('jwtToken', token);
             window.location.href = "AdminDashBoard.html";
              isAuthorized = true;
-        } else if (roleName === 'Host') {
-            // alert("Redirecting to Host Dashboard");
+        }
+         else if (roleName === 'Host')
+          {
             localStorage.setItem('jwtToken', token);
             location.href = "HostDashBoard.html";
             isAuthorized = true;
-        } else if (roleName === 'Security') {
-            // alert("Redirecting to Security Dashboard");
+        }
+         else if (roleName === 'Security') 
+         { 
             localStorage.setItem('jwtToken', token);
             location.href = "SecurityDashBoard.html";
             isAuthorized = true;
         }
     });
     if (!isAuthorized) {
-        alert("User Not Yet Authorized!");
+        Toastify({
+            text: 'User Not Yet Authenticated',
+            backgroundColor: 'red',
+        }).showToast();
     }
 }
 

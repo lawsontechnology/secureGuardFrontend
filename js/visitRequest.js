@@ -1,69 +1,103 @@
+
 document.addEventListener('DOMContentLoaded', function () {
-     const form = document.querySelector('form');
-     form.addEventListener('submit', async function (event) {
-         event.preventDefault(); 
+    const visitRequestForm = document.querySelector('#visitRequestForm');
+    const submitBtn = document.querySelector('#submitBtn');
 
-         
-         if (validateForm()) {
-             
-            try {
-                const formData = new FormData(form);
-                const response = await fetch('http://secureguard-001-site1.anytempurl.com/api/Visitor/Register', {
-                    method: 'POST',
-                    body: formData,
-                });
+    if (visitRequestForm && submitBtn) {
+        submitBtn.addEventListener('click', async function (event) {
+            event.preventDefault();
+            
+            if (validateVisitRequestForm()) {
+                try {
 
-                if (response.ok) {
-                    alert('Registration successful!');
-                } else {
-                    alert('Registration failed:' + data.message);
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = 'Please wait...';
+                    
+                    const formData = new FormData();
+
+                    formData.append('FirstName', document.getElementById('firstName').value.trim());
+                    formData.append('LastName', document.getElementById('lastName').value.trim());
+                    formData.append('HostEmail', document.getElementById('hostEmail').value.trim());
+                    formData.append('EmailAddress', document.getElementById('email').value.trim());
+                    formData.append('PhoneNumber', document.getElementById('phoneNumber').value.trim());
+                    formData.append('Gender', document.querySelector('input[name="Gender"]:checked').value);
+                    formData.append('Image', document.getElementById('image').files[0]);
+                    formData.append('VisitDateAndTime', document.getElementById('visitDate').value.trim());
+                    formData.append('VisitReason', document.getElementById('visitReason').value);
+                    console.log(JSON.stringify(formData));
+                    const response = await fetch('https://localhost:7075/api/Visitor/Register', {
+                        method: 'POST',
+                        body: formData,
+                    });
+                     
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Send Request';
+
+                    if (response.ok) {
+                        Toastify({
+                            text: 'Visit request successful!',
+                            backgroundColor: 'Green',
+                        }).showToast();
+                    } else {
+                        console.error('Visit request failed:', response.status, response.statusText);
+                        console.log(await response.text());
+                        Toastify({
+                            text:'Visit request failed: ' + response.statusText,
+                            backgroundColor: 'red',
+                        }).showToast();
+                    }
+                } catch (error) {
+                    console.error('Error submitting visit request form:', error);
+                    Toastify({
+                        text: 'An unexpected error occurred. Please try again.',
+                        backgroundColor: 'red',
+                    }).showToast();
                 }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('An unexpected error occurred. Please try again.');
             }
-        }
-    });
+        });
+    }
 
-     
-     function validateForm() {
-         const firstName = form.querySelector('[name="firstName"]').value.trim();
-         const lastName = form.querySelector('[name="lastName"]').value.trim();
-         const hostEmail = form.querySelector('[name="hostEmail"]').value.trim();
-         const email = form.querySelector('[name="email"]').value.trim();
-         const phoneNumber = form.querySelector('[name="phoneNumber"]').value.trim();
-         const gender = form.querySelector('[name="gender"]').value.trim();
-         const image = form.querySelector('[name="image"]').files[0];
-         const visitDate = form.querySelector('[name="visitDate"]').value.trim();
-         const visitTime = form.querySelector('[name="visitDate"]').value.trim();
-         const visitReason = form.querySelector('[name="visitReason"]').value.trim();
-
-         
-         if (!firstName || !lastName || !hostEmail || !email || !phoneNumber || !gender || !image || !visitDate || !visitTime || !visitReason) {
-             alert('All fields are required!');
-             return false;
-         }
-
-         if (!isValidEmail(email)) {
-             alert('Invalid email format!');
-             return false;
-         }
-
-         
-         if (!/^\d+$/.test(phoneNumber)) {
-             alert('Invalid phone number format!');
-             return false;
-         }
-
-         return true;
-     }
-
-     
-     function isValidEmail(email) {
-         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-         return emailRegex.test(email);
-     }
+    function validateVisitRequestForm() {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const hostEmail = document.getElementById('hostEmail').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        const gender = document.querySelector('input[name="Gender"]:checked');
+        const image = document.getElementById('image').files[0];
+        const visitDate = document.getElementById('visitDate').value.trim();
+        const visitReason = document.getElementById('visitReason').value;
     
- });
+        if (!firstName || !lastName || !hostEmail || !email || !phoneNumber || !gender || !image || !visitDate || !visitReason) {
+            
+            Toastify({
+                text: 'All fields are required!',
+                backgroundColor: 'red',
+            }).showToast();
+            return false;
+        }
+    
+        if (!isValidEmail(email)) {
+            Toastify({
+                text: 'Invalid email format!',
+                backgroundColor: 'red',
+            }).showToast();
+            return false;
+        }
+    
+        if (!/^\d+$/.test(phoneNumber)) {
+            Toastify({
+                text: 'Invalid phone number format!',
+                backgroundColor: 'red',
+            }).showToast();
+            return false;
+        }
+        return true;
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
- 
+});

@@ -16,16 +16,12 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Roboto:400,500&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/datepicker/dist/datepicker.min.css">
-
     <link href="css/visitorList.css" rel="stylesheet" />
     <link href="css/HostStyle.css" rel="stylesheet" />
     <link href="css/responsive.css" rel="stylesheet" />
     <style>
-        tr.highlighted td {
-            background-color: #FFCCCC; 
-            color: #FFFFFF; 
-        }
+        
+        
     </style>
 </head>
 
@@ -96,7 +92,7 @@
             </li>
 
             <li>
-                <a href="index.html" class="logout">
+                <a href="index.html" class="logout" id="signOutBtn">
                     <!-- <i class='bx bxs-log-out-circle' ></i> -->
                     <i class='bx bx-log-out'></i>
                     <span class="text">Logout</span>
@@ -116,15 +112,15 @@
                     <input type="search" placeholder="Search Data...">
                     <img src="images/search.png" alt="" id="searchButton">
                 </div>
-                <div class="dropdowns">
-                    <label for="dateFilter">Date:</label>
-                    <input type="date" id="dateFilter" />
-
-                    <label for="monthFilter">Month:</label>
-                    <select id="monthFilter"></select>
-
-                    <label for="yearFilter">Year:</label>
-                    <select id="yearFilter"></select>
+                <div class="pagination">
+                    <button class="previous" id="previous">
+                      < Previous
+                    </button>
+                    
+                    <button class="next" id="next">
+                        Next >
+                    </button>
+                    
                 </div>
                 <div class="export__file">
                     <label for="export-file" class="export__file-btn" title="Export File"></label>
@@ -142,13 +138,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th> S/N <span class="icon-arrow">&UpArrow;</span></th>
-                            <th> Visitors <span class="icon-arrow">&UpArrow;</span></th>
-                            <th> Visit Reason <span class="icon-arrow">&UpArrow;</span></th>
-                            <th> VisitDate/VisitTime <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> S/N <span id="scrollToTop" class="icon-arrow">&UpArrow;</span></th>
+                            <th> Visitors <span id="scrollToTop" class="icon-arrow">&UpArrow;</span></th>
+                            <th> Visit Reason <span id="scrollToTop" class="icon-arrow">&UpArrow;</span></th>
+                            <th> VisitDate/VisitTime <span id="scrollToTop" class="icon-arrow">&UpArrow;</span></th>
                             <!-- <th> VisitTime <span class="icon-arrow">&UpArrow;</span></th> -->
-                            <th> Email <span class="icon-arrow">&UpArrow;</span></th>
-                            <th> Tel <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Email <span id="scrollToTop" class="icon-arrow">&UpArrow;</span></th>
+                            <th> Tel <span id="scrollToTop" class="icon-arrow">&UpArrow;</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,7 +157,6 @@
         </main>
     </div>
     <script src="js/visitorList.js"></script>
-    <script src="js/filter.js"></script>
 
 </body>
 

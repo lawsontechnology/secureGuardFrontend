@@ -15,7 +15,7 @@ domReady(function () {
         const id = extractIdFromQRCode(decodeText);
 
         if (id) {
-            const apiUrl = `http://secureguard-001-site1.anytempurl.com/api/Visitor/Visit/Id?visitId=${id}`;
+            const apiUrl = `https://localhost:7075/api/Visitor/Visit/Id?visitId=${id}`;
 
             fetch(apiUrl, {
                 method: "GET",
@@ -35,15 +35,24 @@ domReady(function () {
                     sessionStorage.setItem('apiResponseData', JSON.stringify(data));        
                     window.location.href = 'displayData.html';
                 } else {
-                    alert("No data found for the scanned QR code.");
+                    Toastify({
+                        text: 'No data found for the scanned QR code.',
+                        backgroundColor: 'red',
+                    }).showToast();
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("Error making API request.");
+                Toastify({
+                    text: 'Error making API request.',
+                    backgroundColor: 'red',
+                }).showToast();
             });
         } else {
-            alert("Unable to extract ID from QR code.");
+            Toastify({
+                text: 'Unable to extract ID from QR code.',
+                backgroundColor: 'red',
+            }).showToast();
         }
     }
 
@@ -58,4 +67,16 @@ domReady(function () {
         { fps: 10, qrbos: 250 }
     );
     htmlscanner.render(onScanSuccess);
+});
+document.addEventListener('DOMContentLoaded', function () {
+    
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    if (signOutBtn) {
+        signOutBtn.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'login.html';
+        });
+    }
 });

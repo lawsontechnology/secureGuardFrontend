@@ -1,5 +1,4 @@
 
-<!-- Index.html file -->
 <!DOCTYPE html>
 <html lang="en">
  
@@ -10,7 +9,7 @@
     <link rel="stylesheet"
           href="css/scanner.css">
           <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-          
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">          
     <title>SecureGuard
     </title>
 </head>
@@ -63,7 +62,7 @@
 			</li>
                  
 			<li>
-				<a href="index.html" class="logout">
+				<a href="index.html" class="logout" id="signOutBtn">
 					<!-- <i class='bx bxs-log-out-circle' ></i> -->
 					<i class='bx bx-log-out' ></i>
 					<span class="text">Logout</span>
@@ -72,7 +71,6 @@
 			
 		</ul>
 	</section>
-	<!-- SIDEBAR -->
     <div class="container">
         <h1>Scan QR Codes</h1>
         <div class="section">
@@ -83,6 +81,7 @@
     <script
         src="https://unpkg.com/html5-qrcode">
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="js/Scanner.js"></script>
 </body>
  

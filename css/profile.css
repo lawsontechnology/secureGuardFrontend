@@ -8,42 +8,59 @@
  }
  
  .card {
-     width: 350px;
+     width: 300px;
      background-color: #e0dddd;
      border: none;
      cursor: pointer;
      transition: all 0.5s;
- }
+     
+     height:  508px;
+    }
+    .space{
+       
+        display: grid;
+        row-gap: 5px;
+    }
+    .profileimage{
+        margin-left: 45px;
+    }
+    .image img {
+        transition: all 0.5s;
+        
+    }
+    
+    .card:hover .image img {
+        transform: scale(1.5)
+    }
+    
+    .btn {
+        height: 140px;
+        width: 140px;
+        border-radius: 50%;
+        
+    }
  
- .image img {
-     transition: all 0.5s
- }
- 
- .card:hover .image img {
-     transform: scale(1.5)
- }
- 
- .btn {
-     height: 140px;
-     width: 140px;
-     border-radius: 50%
- }
- 
- .name {
+    .name {
      font-size: 22px;
-     font-weight: bold
- }
+     font-weight: bold;
+     padding-left: 60px;
+    }
  
  .idd {
-     font-size: 14px;
-     font-weight: 600
+    margin-top: 15px;
+     font-size: 19px;
+     font-weight: 650;
+     margin-left: 20px;
+     padding-bottom: 10px;
  }
  
  .idd1 {
-     font-size: 12px
+     font-size: 17px;
+     padding-left: 30px;
  }
  
  .number {
+     
      font-size: 22px;
      font-weight: bold
  }
@@ -55,8 +72,9 @@
  }
  
  .btn1 {
-     height: 40px;
-     width: 150px;
+    margin-left: 10px;
+     height: 42px;
+     width: 230px;
      border: none;
      background-color: #000;
      color: #aeaeae;
@@ -78,11 +96,15 @@
  }
  
  .join {
-     font-size: 14px;
+     font-size: 17px;
      color: #a0a0a0;
-     font-weight: bold
+     font-weight: bold;
+
+     background-color: #ccc;
  }
  
  .date {
-     background-color: #ccc
+     background-color: #ccc;
+     border:3px solid #ccc;
+      
  }

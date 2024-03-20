@@ -1,6 +1,6 @@
 
   document.addEventListener('DOMContentLoaded', function () {
-    const apiUrl = 'http://secureguard-001-site1.anytempurl.com/api/User';
+    const apiUrl = 'https://localhost:7075/api/User';
 
    
     const addAuthorizationHeader = (headers) => {
@@ -9,12 +9,10 @@
             headers.append('Authorization', 'Bearer ' + token);
         }
     };
-
     
     const getUserIdFromToken = (token) => {
         try {
             const decoded = JSON.parse(atob(token.split('.')[1]));
-            // console.log(decoded)
             return decoded?.nameid
             
                 } catch (error) {
@@ -28,21 +26,10 @@
         const nameElement = document.getElementById('FullName');
         const telElement = document.getElementById('phoneNumber');
         const emailElement = document.getElementById('Email');
-        // const securityCodeElement = document.getElementById('SecurityCode');
-        // const numberElement = document.getElementById('Number');
-        // const streetElement = document.getElementById('Street');
-        // const cityElement = document.getElementById('City');
-        // const stateElement = document.getElementById('State');
         const joinElement = document.getElementById('join');
-            // console.log(userData);
         nameElement.textContent = `${userData.firstName} ${userData.lastName}`;
         telElement.textContent = userData.phoneNumber;
         emailElement.textContent = userData.email;
-        // numberElement.textContent = userData.number;
-        // securityCodeElement.textContent = userData.securityCode;
-        // streetElement.textContent = userData.street;
-        // cityElement.textContent = userData.city;
-        // stateElement.textContent = userData.state;
         joinElement.textContent = `Joined ${userData.dateCreated}`;
     };
 
@@ -58,7 +45,7 @@
         }
 
         try {
-            const response = await fetch(`${apiUrl}/Id/${userId}`, { 
+            const response = await fetch(`${apiUrl}${userId}`, { 
                 method: 'GET',
                 headers: headers,
             });
@@ -81,6 +68,19 @@
 
     fetchUserProfile();
   });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    if (signOutBtn) {
+        signOutBtn.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'login.html';
+        });
+    }
+});
 
   const switchMode = document.getElementById('switch-mode');
 
